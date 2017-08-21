@@ -448,12 +448,15 @@ def test_replies():
     assert reply['in_reply_to_status_id_str'] == top_tweet['id_str']
 
 def test_extended():
-    # create a new twarc client that has extended tweets turned on
-    # but the existing twarc client (T) is in default "compat" mode 
-    t_ext = twarc.Twarc(tweet_mode="extended")
 
-    assert 'full_text' not in next(T.search('obama'))
-    assert 'full_text' in next(t_ext.search("obama"))
+    # extended mode is now the default, since not all media entites are 
+    # included when in compat mode, which is a bummer 
+    # https://github.com/DocNow/twarc/issues/168
 
-    assert 'full_text' not in next(T.timeline(screen_name="BarackObama"))
-    assert 'full_text' in next(t_ext.timeline(screen_name="BarackObama"))
+    t_compat = twarc.Twarc(tweet_mode="compat")
+
+    assert 'full_text' in next(T.search('obama'))
+    assert 'full_text' not in next(t_compat.search("obama"))
+
+    assert 'full_text' in next(T.timeline(screen_name="BarackObama"))
+    assert 'full_text' not in next(t_compat.timeline(screen_name="BarackObama"))

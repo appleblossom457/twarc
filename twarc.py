@@ -271,7 +271,7 @@ def get_argparser():
                         help="limit filter to tweets from given user id(s)")
     parser.add_argument("--recursive", dest="recursive", action="store_true",
                         help="also fetch replies to replies")
-    parser.add_argument("--tweet_mode", action="store", default="compat", 
+    parser.add_argument("--tweet_mode", action="store", default="extended", 
                         dest="tweet_mode", choices=["compat", "extended"],
                         help="set tweet mode")
 
